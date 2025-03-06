@@ -7,7 +7,7 @@ public class Teacher {
     private String firstname;
     private String lastname;
     private String vat;
-    private String fathername;
+    private String fatherName;
     private String phoneNum;
     private String email;
     private String street;
@@ -21,14 +21,14 @@ public class Teacher {
 
     public Teacher() {}
 
-    public Teacher(Integer id, String firstname, String lastname, String vat, String fathername,
+    public Teacher(Integer id, String firstname, String lastname, String vat, String fatherName,
                    String phoneNum, String email, String street, String streetNum, String zipCode,
                    Integer cityId, String uuid, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.vat = vat;
-        this.fathername = fathername;
+        this.fatherName = fatherName;
         this.phoneNum = phoneNum;
         this.email = email;
         this.street = street;
@@ -72,12 +72,12 @@ public class Teacher {
         this.vat = vat;
     }
 
-    public String getFathername() {
-        return fathername;
+    public String getFatherName() {
+        return fatherName;
     }
 
-    public void setFathername(String fathername) {
-        this.fathername = fathername;
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
     }
 
     public String getPhoneNum() {
