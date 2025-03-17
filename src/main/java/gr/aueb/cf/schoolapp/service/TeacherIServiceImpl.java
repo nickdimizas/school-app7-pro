@@ -11,6 +11,8 @@ import gr.aueb.cf.schoolapp.mapper.Mapper;
 import gr.aueb.cf.schoolapp.model.Teacher;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class TeacherIServiceImpl implements ITeacherService {
 
@@ -91,17 +93,61 @@ public class TeacherIServiceImpl implements ITeacherService {
     }
 
     @Override
-    public TeacherReadOnlyDTO getTeacherById(Integer id) throws TeacherDAOException, TeacherNotFoundException {
-        return null;
+    public TeacherReadOnlyDTO getTeacherById(Integer id)
+            throws TeacherNotFoundException, TeacherDAOException {
+        Teacher teacher;
+
+        try {
+            teacher = teacherDAO.getById(id);
+            //return Mapper.mapTeacherToReadOnlyDTO(teacher).orElseThrow(() -> new TeacherNotFoundException("Teacher not found in get teacher by id"));
+            return Mapper.mapTeacherToReadOnlyDTO(teacher).orElseThrow(() -> new TeacherNotFoundException("Teacher not found in get teacher by id"));
+        }
+        catch (TeacherNotFoundException | TeacherDAOException e) {
+            //e.printStackTrace();
+            // rollback
+            throw e;
+        }
     }
 
     @Override
     public List<TeacherReadOnlyDTO> getAllTeachers() throws TeacherDAOException {
-        return List.of();
+        List<Teacher> teachers;
+
+        try {
+            teachers = teacherDAO.getAll();
+            return teachers.stream()
+                    .map(Mapper::mapTeacherToReadOnlyDTO)
+                    .flatMap(Optional::stream)
+                    .collect(Collectors.toList());
+
+//            return teachers.stream()
+//                    .map(t -> Mapper.mapTeacherToReadOnlyDTO(t).orElse(null))
+//                    .collect(Collectors.toList());
+
+        } catch (TeacherDAOException e) {
+            // e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override
-    public List<TeacherReadOnlyDTO> getTeachersByLastname(String lastname) throws TeacherDAOException {
-        return List.of();
+    public List<TeacherReadOnlyDTO> getTeachersByLastname(String lastname)
+            throws TeacherDAOException {
+        List<Teacher> teachers;
+
+        try {
+            teachers = teacherDAO.getByLastname(lastname);
+
+            return teachers.stream()
+                    .map(Mapper::mapTeacherToReadOnlyDTO)
+                    .flatMap(Optional::stream)
+                    .collect(Collectors.toList());
+//            return teachers.stream()
+//                    .map(teacher -> Mapper.mapTeacherToReadOnlyDTO(teacher).orElse(null))
+//                    .collect(Collectors.toList());
+        } catch (TeacherDAOException e) {
+            // e.printStackTrace();
+            throw e;
+        }
     }
 }
