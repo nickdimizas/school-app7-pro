@@ -8,18 +8,19 @@ import java.util.List;
 
 public class CityServiceImpl implements ICityService {
 
-    private final ICityDAO dao;
+    private final ICityDAO cityDAO;
 
-    public CityServiceImpl(ICityDAO dao) {
-        this.dao = dao;
+    public CityServiceImpl(ICityDAO cityDAO) {
+        this.cityDAO = cityDAO;
     }
+
 
     @Override
     public List<City> getAllCities() throws SQLException {
         try {
-            return dao.getAll();
+            return cityDAO.getAll();
         } catch (SQLException e) {
-            // e.printStackTrace();
+            e.printStackTrace();
             throw e;
         }
     }

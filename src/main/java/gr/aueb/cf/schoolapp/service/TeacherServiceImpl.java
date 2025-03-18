@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class TeacherIServiceImpl implements ITeacherService {
+public class TeacherServiceImpl implements ITeacherService {
 
     private final ITeacherDAO teacherDAO;
 
     // Constructor Injection
-    public TeacherIServiceImpl(ITeacherDAO teacherDAO) {
+    public TeacherServiceImpl(ITeacherDAO teacherDAO) {
         this.teacherDAO = teacherDAO;
     }
 
